@@ -32,6 +32,8 @@ import cachedb
 import tilekey
 import dbtype
 
+import ocplib
+
 from ocpca_cy import recolor_cy
 from windowcutout import windowCutout
 
@@ -422,7 +424,9 @@ class TileCache:
     if self.dbtype == dbtype.IMAGES_8bit :
       return Image.frombuffer ( 'L', [xdim,ydim], tile.flatten(), 'raw', 'L', 0, 1 )
     elif self.dbtype == dbtype.ANNOTATIONS :
-      recolor_cy (tile, tile)
+      #recolor_cy (tile, tile)
+      tile = ocplib.recolor_ctype( tile, tile )
+
       return Image.frombuffer ( 'RGBA', [xdim,ydim], tile.flatten(), 'raw', 'RGBA', 0, 1 )
     elif self.dbtype == dbtype.IMAGES_16bit :
       outimage = Image.frombuffer ( 'I;16', [xdim,ydim], tile.flatten(), 'raw', 'I;16', 0, 1)
